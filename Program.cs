@@ -3,6 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using EmailSender1;
 
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -12,6 +15,16 @@ builder.Services.AddSwaggerGen();
 //builder.Services.AddHostedService<EmailSenderService>();
 //builder.Services.AddScoped<EmailController>();
 builder.Services.AddTransient<EmailSenderService, EmailSenderService>();
+
+
+Host.CreateDefaultBuilder(args)
+    .ConfigureServices((hostContext, services) =>
+    {
+        services.AddHostedService<EmailSenderService>();
+    })
+    .Build()
+    .Run();
+
 
 var app = builder.Build();
 

@@ -17,16 +17,15 @@ namespace EmailSender1
             while (!stoppingToken.IsCancellationRequested)
             {
                 DateTime now = DateTime.Now;
-                DateTime scheduledTime = DateTime.Today.AddHours(18); // 8 PM
+                DateTime scheduledTime = DateTime.Today.AddHours(11); // 8 PM
 
-                if (now > scheduledTime)
-                    scheduledTime = scheduledTime.AddDays(1);
+                if (now == scheduledTime)
+                    // Send the email
+                    SendEmail();
 
-                TimeSpan delay = scheduledTime - now;
-                await Task.Delay(delay, stoppingToken);
+                await Task.Delay(TimeSpan.FromMinutes(1));
 
-                // Send the email
-                SendEmail();
+
             }
         }
 
